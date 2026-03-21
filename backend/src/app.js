@@ -1,8 +1,5 @@
-// backend/src/app.js
-const express = require("express");
-const cors = require("cors");
-// Aquí importarás tus rutas más adelante
-// const productRoutes = require('./routes/products');
+import express from 'express';
+import cors from 'cors';
 
 const app = express();
 
@@ -10,12 +7,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Ruta de prueba
-app.get("/", (req, res) => {
-  res.send("API funcionando desde app.js 🚀");
+// Ruta de prueba inicial
+app.get('/', (req, res) => {
+  res.send('API del E-commerce funcionando con ESM 🚀');
 });
 
-// Vincular rutas (cuando las tengas)
-// app.use('/api/products', productRoutes);
-
-module.exports = app; // <--- Importante exportar la app
+export default app;
