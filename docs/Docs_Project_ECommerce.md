@@ -1,4 +1,4 @@
-# 📦 TiendaStore — Documentación de Planificación del Proyecto E-Commerce
+# Documentación de Planificación del Proyecto E-Commerce
 
 ## 1. Descripción General
 
