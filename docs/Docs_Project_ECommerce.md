@@ -59,9 +59,6 @@ Aplicación de comercio electrónico completa con dos interfaces principales:
 | **GitHub** | Control de versiones y CI/CD |
 | **GitHub Actions** | Pipeline de integración continua |
 
-> [!TIP]
-> Para un MVP rápido y económico, se recomienda **Vercel** (front) + **Railway** (back + MySQL), ambos con tier gratuito.
-
 ---
 
 ## 3. Arquitectura del Sistema
@@ -389,10 +386,6 @@ flowchart TD
 | 7. QA, Deploy y Docs | 25h |
 | **Total** | **~158h** |
 
-> [!IMPORTANT]
-> Con un equipo de 2 desarrolladores full-time (~8h/día), el proyecto se estima en **~4 semanas** (1 sprint de 2 semanas para backend + admin, 1 sprint para storefront + checkout + QA).
-
----
 
 ## 8. Cronograma Sugerido (4 Sprints de 1 semana)
 
