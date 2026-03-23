@@ -58,13 +58,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-8 py-6 flex flex-col sm:flex-row items-center justify-between text-gray-400 text-sm gap-4">
         <p>&copy; 2026 Tiendita. Todos los derechos reservados.</p>
           <div className="flex gap-4 mt-2">
-            <a href="https://www.instagram.com/petsride2025" aria-label="Instagram" className="hover:text-pink-500">
+            <a href="#" aria-label="Instagram" className="hover:text-pink-500">
               <FaInstagram size={24} />
             </a>
             <a href="#" aria-label="X" className="hover:text-sky-400">
               <FaTwitter size={24} />
             </a>
-            <a href="https://www.facebook.com/profile.php?id=61582693965191&mibextid=wwXIfr&rdid=tPF7gprbBKO7ieNu&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F17WvjB2RWY%2F%3Fmibextid%3DwwXIfr#" aria-label="Facebook" className="hover:text-blue-600">
+            <a href="#" aria-label="Facebook" className="hover:text-blue-600">
               <FaFacebook size={24} />
             </a>
           </div>

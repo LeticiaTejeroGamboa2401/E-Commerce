@@ -10,12 +10,11 @@ export default function HomePage() {
     return (
         <div className='min-h-screen flex flex-col'>
             <Header/>
-            <div className="pt-30 flex-1">
+            <div className='pt-25 full-w'>
                 <HeroCarousel/>
             </div>
-            <div className="pt-90 flex-1">
-                <ProductSection/>
-            </div>
+            
+            <ProductSection/>
             <Footer/>
         </div>
     );

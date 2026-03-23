@@ -1,79 +1,94 @@
 import { useState, useEffect } from 'react';
-
-const slides = [
-  {
-    title: "Estilo y tecnología para tu día a día",
-    subtitle: "Nueva temporada",
-    description: "Explora nuestra nueva colección de productos seleccionados cuidadosamente para brindarte la mejor calidad y diseño al mejor precio.",
-    image: "/imagenes/tecnologias.jpg",
-    buttonText: "Ver Colección",
-    buttonLink: "#"
-  },
-  {
-    title: "Ofertas exclusivas de primavera",
-    subtitle: "Temporada especial",
-    description: "Aprovecha descuentos especiales en productos seleccionados solo por tiempo limitado.",
-    image: "/imagenes/primavera.jpg",
-    buttonText: "Ver Ofertas",
-    buttonLink: "#"
-  },
-  {
-    title: "Novedades en tecnología",
-    subtitle: "Últimas tendencias",
-    description: "Descubre los gadgets más innovadores que harán tu día a día más fácil y divertido.",
-    image: "/imagenes/tecno.jpg",
-    buttonText: "Ver Novedades",
-    buttonLink: "#"
-  }
-];
+import { HERO_SLIDES } from '../../../constants/data';
 
 export default function HeroCarousel() {
   const [current, setCurrent] = useState(0);
 
-  // Cambia slide cada 5 segundos
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent(prev => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+    // Definimos la función de cambio de slide
+    const playNext = () => {
+      setCurrent(prev => (prev + 1) % HERO_SLIDES.length);
+    };
+
+    // Cada slide dura 5 segundos
+    let intervalId = setInterval(playNext, 5000);
+
+    // Pausa del carrusel
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        clearInterval(intervalId); // Pausa
+      } else {
+        // Reinicia el intervalo al volver a la pestaña, 
+        // evitando saltos bruscos inmediatamente.
+        clearInterval(intervalId); 
+        intervalId = setInterval(playNext, 5000);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Limpieza al desmontar el componente
+    return () => {
+      clearInterval(intervalId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []); // Solo se ejecuta una vez al montar
 
   return (
-    <section className="relative w-full flex justify-center pt-16">
-        {slides.map((slide, index) => (
+    // Optimizamos CLS: Definimos una altura mínima para el contenedor padre 
+    // que coincida con la altura de los slides absolutos.
+    <section 
+      className="relative w-full flex justify-center h-[416px] pb-16" 
+      aria-roledescription="carousel" 
+      aria-label="Productos destacados"
+    >
+        {HERO_SLIDES.map((slide, index) => {
+          const isActive = index === current;
+          return (
             <div
-            key={index}
-            className={`absolute top-0 left-0 w-full flex justify-center transition-opacity duration-1000 ${
-                index === current ? "opacity-100 z-10" : "opacity-0 z-0"
-            }`}
+              key={index}
+              className={`absolute top-0 flex justify-center transition-opacity duration-1000 ${
+                isActive ? "opacity-100 z-10" : "opacity-0 z-0"
+              }`}
+              aria-hidden={!isActive}
+              role="group"
+              aria-roledescription="slide"
             >
                 {/* Contenedor exacto: texto + imagen */}
-                <div className="flex h-[400px] overflow-hidden rounded-2xl shadow-lg">
+                <div className="flex h-[400px] overflow-hidden rounded-2xl shadow-lg bg-[#f2f4f6]">
                     
-                    <div className="max-w-xl bg-[#f2f4f6] h-full p-6 flex flex-col justify-center items-start">
-                        <p className="text-sm text-gray-500 uppercase">{slide.subtitle}</p>
-                        <h2 className="text-3xl md:text-5xl font-bold mt-2 text-gray-900">{slide.title}</h2>
-                        <p className="mt-4 text-gray-700">{slide.description}</p>
+                    {/* Sección de Texto */}
+                    <div className="max-w-xl h-full p-6 flex flex-col justify-center items-start">
+                        <p className="text-sm text-gray-500 uppercase tracking-wide">{slide.subtitle}</p>
+                        <h2 className="text-3xl md:text-5xl font-bold mt-2 text-gray-900 leading-tight">{slide.title}</h2>
+                        <p className="mt-4 text-gray-700 text-base md:text-lg">{slide.description}</p>
                         <a
                             href={slide.buttonLink}
-                            className="mt-6 inline-block bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition"
+                            className="mt-6 inline-block bg-blue-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition duration-150 shadow-sm"
+                            aria-label={`${slide.buttonText} sobre ${slide.title}`}
                         >
                             {slide.buttonText}
                         </a>
                     </div>
 
-                    {/* Imagen */}
+                    {/* Sección de Imagen - Optimizada */}
                     <div className="hidden md:block h-full">
                         <img
                             src={slide.image}
                             alt={slide.title}
+                            // IMPORTANTE PARA RENDIMIENTO:
+                            // fetchPriority="high" y loading="eager" solo para el primer slide visible (LCP).
+                            // loading="lazy" para el resto.
+                            fetchPriority={index === 0 ? "high" : "low"}
+                            loading={index === 0 ? "eager" : "lazy"}
                             className="h-full w-[500px] object-cover"
                         />
                     </div>
 
                 </div>
             </div>
-        ))}
+          );
+        })}
     </section>
   );
 }

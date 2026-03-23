@@ -5,6 +5,7 @@ import HomePage from './pages/store/HomePage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import NotFound from './pages/NotFound';
+import CatalogPage from './pages/store/CatalogPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         {/* Ruta principal de la tienda */}
         <Route path="/" element={<HomePage />} />
+        <Route path="/catalog" element={<CatalogPage />}/>
 
         {/* Rutas de Autenticación */}
         <Route path="/login" element={<LoginPage />}></Route>

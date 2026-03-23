@@ -13,8 +13,8 @@ export default function Header() {
           
           {/* Navegación */}
           <nav className="hidden md:flex space-x-8">
-            <a href="#" className="text-gray-700 hover:text-blue-600">Inicio</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600">Catálogo</a>
+            <a href="/" className="text-gray-700 hover:text-blue-600">Inicio</a>
+            <a href="/catalog" className="text-gray-700 hover:text-blue-600">Catálogo</a>
             <a href="#" className="text-gray-700 hover:text-blue-600">Novedades</a>
             <a href="#" className="text-gray-700 hover:text-blue-600">Ofertas</a>
           </nav>
